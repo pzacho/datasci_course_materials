@@ -20,6 +20,8 @@ def calcSentiment(aScoresDict, aLine):
             if aScoresDict.has_key(word):
                 sentiment+=aScoresDict[word]
         print(sentiment)
+    else:
+        print 0
  
 def main():
     finn_file = open(sys.argv[1])
