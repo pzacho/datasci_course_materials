@@ -16,10 +16,10 @@ def calcFreq(aTermDict, aLine):
         # split line into words
         words = aLine.split(' ')
         for word in words:
-            if word in aTermDict:
-                aTermDict[word] += 1
+            if word.strip() in aTermDict:
+                aTermDict[word.strip()] += 1
             else:
-                aTermDict[word] = 1
+                aTermDict[word.strip()] = 1
     return(aTermDict)
 
 def main():
