@@ -11,44 +11,28 @@ def parseTweet(aTweetLine):
     else:
         return("")
 
-def calcSentiment(aScoresDict, aLine):
+def calcFreq(aTermDict, aLine):
     if len(aLine) > 0:
         # split line into words
         words = aLine.split(' ')
-        sentiment = 0
         for word in words:
-            if word in aScoresDict:
-                sentiment+=aScoresDict[word]
-        return(sentiment)
-    else:
-        return 0
-
-def calcTermSentiments(aScoresDict, aTermDict, aLine):
-    sentiment = calcSentiment(aScoresDict, aLine)
-    if (len(aLine) > 0) and (sentiment != 0):
-        # split line into words
-        words = aLine.split(' ')
-        for word in words:
-            if word not in aScoresDict:
-                if word in aTermDict:
-                    aTermDict[word] += sentiment
-                else:
-                    aTermDict[word] = sentiment
+            if word in aTermDict:
+                aTermDict[word] += 1
+            else:
+                aTermDict[word] = 1
     return(aTermDict)
 
 def main():
-    finn_file = open(sys.argv[1])
-    tweet_file = open(sys.argv[2])
+    tweet_file = open(sys.argv[1])
     # initialise an empty dictionary
-    scores = {}
     terms = {}
-    for line in finn_file:
-        term, score  = line.split("\t")  # The file is tab-delimited. "\t" means "tab character"
-        scores[term] = int(score)  # Convert the score to an integer.
     for line in tweet_file:
-        terms = calcTermSentiments(scores, terms, parseTweet(line))
+        terms = calcFreq(terms, parseTweet(line))
+    # calc number of terms
+    totalTerms = float(sum(terms.values()))
+    # calc frequency
     for term in terms:
-        print term.encode("utf-8"), terms[term]
+        print term.encode("utf-8"), terms[term]/totalTerms
 
 if __name__ == '__main__':
     main()
