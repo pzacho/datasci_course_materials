@@ -37,7 +37,7 @@ def main():
     # sort list
     sortedList = sorted(tagsList.iteritems(), key=operator.itemgetter(1))
     sortedList.reverse()
-    for x in range(0,9):
+    for x in range(0,10):
         print sortedList[x][0], sortedList[x][1]
 
 if __name__ == '__main__':
