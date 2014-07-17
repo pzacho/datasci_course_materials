@@ -67,7 +67,7 @@ def main():
             highState=state
             highSent=avg
 
-    print highState, highSent
+    print highState
 
 if __name__ == '__main__':
     main()
