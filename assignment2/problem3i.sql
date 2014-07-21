@@ -1,0 +1,2 @@
+create view vw_keyword as select * from frequency union select 'q' as docid, 'washington' as term, 1 as count union select 'q' as docid, 'taxes' as term, 1 as count union select 'q' as docid, 'treasury' as term, 1 as count;
+select /*adocid, bdocid,*/ similarity from (select a.docid as adocid, b.docid as bdocid, sum(a.count*b.count) as similarity from vw_keyword a inner join vw_keyword b on a.term = b.term and (a.docid < b.docid) and (a.docid='q' or b.docid='q') group by a.docid, b.docid) a order by a.similarity desc;
