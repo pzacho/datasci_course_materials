@@ -2,7 +2,7 @@ import MapReduce
 import sys
 
 """
-Word Count Example in the Simple Python MapReduce Framework
+Inverted Index Example in the Simple Python MapReduce Framework
 """
 
 mr = MapReduce.MapReduce()
@@ -16,16 +16,13 @@ def mapper(record):
     key = record[0]
     value = record[1]
     words = value.split()
-    for w in words:
-      mr.emit_intermediate(w, 1)
+    for w in set(words):
+      mr.emit_intermediate(w, key)
 
 def reducer(key, list_of_values):
     # key: word
-    # value: list of occurrence counts
-    total = 0
-    for v in list_of_values:
-      total += v
-    mr.emit((key, total))
+    # value: list of documents
+    mr.emit((key, list_of_values))
 
 # Do not modify below this line
 # =============================
